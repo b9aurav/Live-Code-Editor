@@ -118,6 +118,7 @@
 </body>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
     import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
     const firebaseConfig = {
@@ -132,6 +133,7 @@
     };
   
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getDatabase(app);
 
     var fname = document.getElementById('fname');
@@ -193,14 +195,16 @@
             passwordMatchError.style.display = 'block';
             return;
         }
-        
+
         const dbRef = ref(getDatabase());
-        get(child(dbRef, 'Users/' + username)).then((snapshot) => {
-            if (snapshot.exists()) {
-                duplicateUsernameError.style.display = 'block';
-                return;
-            } else {
-                set(ref(db, 'Users/' + username), {
+
+        //Creating User
+        createUserWithEmailAndPassword(auth, email.value, password.value)
+            .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            const uid = user.uid;
+            set(ref(db, 'Users/' + uid), {
                     username: username,
                     password: password.value,
                     first_name: fname.value,
@@ -216,8 +220,35 @@
                     email.value = '';
                     cpassword.value = '';
                 });
-            }
+        })
+        .catch((error) => {
+            alert(error.message);
+            console.log(error.message);
         });
+        
+        // get(child(dbRef, username)).then((snapshot) => {
+        //     if (snapshot.exists()) {
+        //         duplicateUsernameError.style.display = 'block';
+        //         return;
+        //     } else {
+        //         set(ref(db, username), {
+        //             username: username,
+        //             password: password.value,
+        //             first_name: fname.value,
+        //             last_name: lname.value,
+        //             email: email.value,
+        //         })
+        //         .then(() => {
+        //             successInfo.style.display = 'block';
+        //             uname.value = '';
+        //             password.value = '';
+        //             fname.value = '';
+        //             lname.value = '';
+        //             email.value = '';
+        //             cpassword.value = '';
+        //         });
+        //     }
+        // });
     }
 
     loginBtn.onclick = function() {
