@@ -118,7 +118,7 @@
 </body>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, sendEmailVerification, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
     import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
     const firebaseConfig = {
@@ -196,12 +196,27 @@
             return;
         }
 
+        // onAuthStateChanged(auth, (user) => {
+        //     if (user) {
+        //         const uid = user.uid;
+        //         const isMailVerified = user.emailVerified;
+        //         if(isMailVerified) {
+        //             alert('Login Successful');
+        //         }    
+        //      } else {
+        //         alert('Logout Successful');
+        //      }
+        // });
+
         const dbRef = ref(getDatabase());
 
         //Creating User
         createUserWithEmailAndPassword(auth, email.value, password.value)
             .then((userCredential) => {
-            // Signed in
+
+            //Sent Email Verification Link
+            sentVerificationLink();
+
             const user = userCredential.user;
             const uid = user.uid;
             set(ref(db, 'Users/' + uid), {
@@ -212,47 +227,36 @@
                     email: email.value,
                 })
                 .then(() => {
-                    successInfo.style.display = 'block';
+                    // successInfo.style.display = 'block';
                     uname.value = '';
                     password.value = '';
                     fname.value = '';
                     lname.value = '';
                     email.value = '';
                     cpassword.value = '';
+                    auth.signOut();
+                    alert('Registration Successful. Please Verify your Email.');
+                    window.location.href="login.html"
                 });
         })
         .catch((error) => {
             alert(error.message);
             console.log(error.message);
         });
-        
-        // get(child(dbRef, username)).then((snapshot) => {
-        //     if (snapshot.exists()) {
-        //         duplicateUsernameError.style.display = 'block';
-        //         return;
-        //     } else {
-        //         set(ref(db, username), {
-        //             username: username,
-        //             password: password.value,
-        //             first_name: fname.value,
-        //             last_name: lname.value,
-        //             email: email.value,
-        //         })
-        //         .then(() => {
-        //             successInfo.style.display = 'block';
-        //             uname.value = '';
-        //             password.value = '';
-        //             fname.value = '';
-        //             lname.value = '';
-        //             email.value = '';
-        //             cpassword.value = '';
-        //         });
-        //     }
-        // });
     }
 
     loginBtn.onclick = function() {
         window.location.href="login.html"
     }
+
+    function sentVerificationLink() {
+        sendEmailVerification(auth.currentUser)
+            .then(() => {
+                // Email verification Link sent!
+            }).catch((error) => {
+                alert(error.message);
+            });
+    }
+
 </script>
 </html>

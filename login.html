@@ -112,19 +112,12 @@
             const user = userCredential.user;
             const uid = user.uid;
 
-            alert("Logged in");
-
-            // get(child(dbRef, 'Users/' + uid + "/")).then((snapshot) => {
-            //     if (snapshot.exists()) {
-            //         if (snapshot.val().password !== password.value) {
-            //             errorMsg.style.display = 'block';    
-            //         } else {
-            //             alert("Logged in");
-            //         }
-            //     } else {
-            //         errorMsg.style.display = 'block';
-            //     }
-            // });
+            if(user.emailVerified) {
+                alert("Logged in");
+            } else {
+                auth.signOut();
+                alert("Verify Your Email to Login");
+            }
         })
         .catch((error) => {
             alert(error.message);
