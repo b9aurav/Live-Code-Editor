@@ -7,6 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Login - Live Code Editor</title>
     <style>
+        p {
+            margin: 0;
+            padding: 0;
+        }
         body {
             background-image: url(img/bg.jpg);
             background-size: cover;
@@ -44,6 +48,8 @@
             display: none;
             bottom: 0;
             position: absolute;
+            float: left;
+            flex-direction: row;
         }
     </style>
 </head>
@@ -67,7 +73,7 @@
             </div>
             <div class="alert alert-danger" id="error-div" role="alert">
                 <strong>Error : </strong>
-                Invalid email or Password!
+                <p id="errordesc"></p>
             </div>
         </div>
     </div>
@@ -97,6 +103,7 @@
     var password = document.getElementById('password');
     var loginBtn = document.getElementById('login-btn');
     var errorMsg = document.getElementById('error-div');
+    var errorDesc = document.getElementById('errordesc');
 
     regBtn.onclick = function() {
         window.location.href="registration.html"
@@ -113,15 +120,17 @@
             const uid = user.uid;
 
             if(user.emailVerified) {
-                alert("Logged in");
+                sessionStorage.setItem('user-key', uid);
+                location.href = 'index.html';
             } else {
                 auth.signOut();
-                alert("Verify Your Email to Login");
+                errorDesc.textContent = ' Verify your email to login!'
+                errorMsg.style.display = 'flex';
             }
         })
         .catch((error) => {
-            alert(error.message);
-            console.log(error.message);
+            errorDesc.textContent = ' Invalid email or password!'
+            errorMsg.style.display = 'flex';
         });
     }
 </script>

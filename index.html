@@ -6,42 +6,71 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   </head>
-
   <body>
+
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
+      <div id="project-list"></div>
+    </div>
+
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
-        <h4 id="heading">Live Code Editor</h3>
-        <button type="button" class="btn btn-success">Run in new tab</button>
+        <div id="menu-head-div">
+          <img width="24px" src="https://img.icons8.com/material-outlined/24/ffffff/menu--v1.png" style="margin-right: 8px;" onclick="openSidebar()"/>
+          <div class="heading"><h4 class="heading">Live Code Editor</h4></div>
+        </div>
+        <div id="navbar-sidediv">
+          <a id="user-name">Howdy, User</a>
+          <button type="button" class="btn btn-outline-secondary" style="margin-left: 8px;" onclick="logoutUser()">Logout!</button>
+        </div>
       </div>
     </nav>
 
+    <div class="container-fluid" style="background-color: rgb(50,50,50);">
+      <div class="card">
+        <div class="card-body navbar">
+          <div class="form-check form-switch live-preview-input">
+            <input class="form-check-input" type="checkbox" id="preview-switch" checked onchange="switchPreview()">
+            <label class="form-check-label" for="preview-switch">Live preview</label>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary" id="new-project-btn">New Project</button>
+            <button type="button" class="btn btn-success" id="new-tab-btn">Run in new tab</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="container-fluid" id="code-container">
       <div class="card">
         <div class="card-body">
-          <textarea id="html"><!-- Start HTML from here.  -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
-</html></textarea>
+          <textarea id="html"></textarea>
           <textarea id="css">/* Start CSS from here. */</textarea>
           <textarea id="js">//Start JavaScript from here.</textarea>
         </div>
       </div>
     </div>
 
-    <h5>Preview</h5>
-
     <div class="container-fluid" id="output-container">
       <iframe id="code"></iframe>
     </div>
-    <script type="text/javascript" src="app.js"></script>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="close-modal-btn">&times;</span>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default">Project Name</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="project-name">
+        </div>
+        <div class="alert alert-danger" id="error-div" role="alert">
+          <strong>Error : </strong>
+          <p id="errordesc"></p>
+        </div>
+        <button type="button" class="btn btn-success" style="float: right;" id="create-project-btn">Create</button>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
