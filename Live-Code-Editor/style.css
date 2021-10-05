@@ -1,0 +1,67 @@
+body {
+  text-align: center;
+}
+
+textarea {
+  width: 33%;
+  float: top;
+  min-height: 250px;
+  overflow: scroll;
+  margin: auto;
+  display: inline-block;
+  word-wrap: unset;
+  outline: none;
+  font-size: 14px;
+}
+
+iframe {
+  bottom: 0;
+  position: relative;
+  width: 100%;
+  height: 35em;
+}
+
+#heading {
+  color: whitesmoke
+}
+
+#code-container {
+  padding: 1%;
+}
+
+#output-container {
+  border: 1px solid black;
+}
+
+#html {
+  background: rgba(15, 15, 15, 0.7);
+  background-image: url(img/html-5.png);
+  background-size: 100px;
+  background-repeat: no-repeat;
+  color: whitesmoke;
+  background-position: center;
+  background-blend-mode: color-burn;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#css {
+  background: rgba(15, 15, 15, 0.7);
+  background-image: url(img/css.png);
+  background-size: 100px;
+  background-repeat: no-repeat;
+  color: whitesmoke;
+  background-position: center;
+  background-blend-mode: color-burn;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#js {
+  background: rgba(15, 15, 15, 0.7);
+  background-image: url(img/javascript-39394.png);
+  background-size: 100px;
+  background-repeat: no-repeat;
+  color: whitesmoke;
+  background-position: center;
+  background-blend-mode: color-burn;
+  font-family: 'Courier New', Courier, monospace;
+}

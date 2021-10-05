@@ -21,7 +21,7 @@
         </div>
         <div id="navbar-sidediv">
           <a id="user-name">Howdy, User</a>
-          <button type="button" class="btn btn-outline-secondary" style="margin-left: 8px;" onclick="logoutUser()">Logout!</button>
+          <button type="button" class="btn btn-outline-secondary" style="margin-left: 8px;" onclick="logoutUser()"><img src="img/logout.svg" alt="" srcset=""> Logout!</button>
         </div>
       </div>
     </nav>
@@ -34,8 +34,10 @@
             <label class="form-check-label" for="preview-switch">Live preview</label>
           </div>
           <div>
-            <button type="button" class="btn btn-primary" id="new-project-btn">New Project</button>
-            <button type="button" class="btn btn-success" id="new-tab-btn">Run in new tab</button>
+            <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/add.svg" alt="" srcset=""> New Project</button>
+            <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/save.svg" alt="" srcset=""> Save Project</button>
+            <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/download.svg" alt="" srcset=""> Download Project</button>
+            <button type="button" class="btn btn-success" id="new-tab-btn"><img src="img/run.svg" alt="" srcset=""> Run in new tab</button>
           </div>
         </div>
       </div>
@@ -59,14 +61,14 @@
       <div class="modal-content">
         <span class="close" id="close-modal-btn">&times;</span>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-default">Project Name</span>
-          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="project-name">
+          <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/details.svg" alt="" srcset=""></span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="project-name" placeholder="Project Name">
         </div>
         <div class="alert alert-danger" id="error-div" role="alert">
           <strong>Error : </strong>
           <p id="errordesc"></p>
         </div>
-        <button type="button" class="btn btn-success" style="float: right;" id="create-project-btn">Create</button>
+        <button type="button" class="btn btn-success" style="float: right;" id="create-project-btn"><img src="img/add.svg" alt="" srcset=""> Create</button>
       </div>
     </div>
 

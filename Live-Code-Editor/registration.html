@@ -17,7 +17,7 @@
         }
         #main-container {
             width: 35rem;
-            height: 33rem;
+            height: 35rem;
             border-radius: 15px;
             background: rgba(40, 40, 40, 0.5);
             backdrop-filter: blur(5px);
@@ -29,7 +29,7 @@
         #inner-container {
             position: relative;
             width: 30rem;
-            height: 33rem;
+            height: 35rem;
             background: rgba(50, 50, 50, 0.8);
             border: 2px solid grey;
             backdrop-filter: blur(10px);
@@ -53,41 +53,41 @@
             bottom: 0;
             position: absolute;
         }
-        p {
-            margin: 0;
-            padding: 0;
-        }
     </style>
 </head>
 <body>
     <div id="main-container">
         <div id="left-container">
             <h3 style="color: white; margin: 1rem;">Signup</h3>
-            <button class="btn btn-primary" style="bottom: 0; position: absolute; width: 100%;" id="login-btn"> <img src="img/login.svg" alt="" srcset=""> Login</button>
+            <button class="btn btn-primary" style="bottom: 0; position: absolute; width: 100%;" id="login-btn">Login</button>
         </div>
         <div id="inner-container">
             <div id="input-container">
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/details.svg" alt="" srcset=""></span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="fname" placeholder="First Name">
+                    <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="fname">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/details.svg" alt="" srcset=""></span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="lname" placeholder="Last Name">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Last Name</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="lname">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/email.svg" alt="" srcset=""></span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="email" placeholder="E - Mail">
+                    <span class="input-group-text" id="inputGroup-sizing-default">E-mail</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="email">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/password.svg" alt="" srcset=""></span>
-                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="password" placeholder="Password">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="username">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/password.svg" alt="" srcset=""></span>
-                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="cpassword" placeholder="Confirm Password">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="password">
                 </div>
-                <button type="button" class="btn btn-success" style="float: right;" id="register-btn"> <img src="img/register.svg" alt="" srcset=""> Register ></button>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Confirm Password</span>
+                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="cpassword">
+                </div>
+                <button type="button" class="btn btn-success" style="float: right;" id="register-btn">Register ></button>
             </div>
             <div class="alert alert-primary" id="infodiv" role="alert">
                 <strong>Info : </strong>
@@ -97,17 +97,21 @@
                 <strong>Error : </strong>
                 Invalid E-mail id.
             </div>
+            <div class="alert alert-danger invalid-detail-div" id="duplicateusernameerror" role="alert">
+                <strong>Error : </strong>
+                Username already taken!
+            </div>
             <div class="alert alert-danger invalid-detail-div" id="passwordmatcherror" role="alert">
                 <strong>Error : </strong>
                 Password doesn't matched!
             </div>
+            <div class="alert alert-danger invalid-detail-div" id="usernameerror" role="alert">
+                <strong>Error : </strong>
+                Invalid username! Username can't be blank and should not start with _, @, or any number.
+            </div>
             <div class="alert alert-danger invalid-detail-div" id="passworderror" role="alert">
                 <strong>Error : </strong>
                 Invalid password! Password length must in between 6 to 12 characters.
-            </div>
-            <div class="alert alert-danger invalid-detail-div" id="error" role="alert">
-                <strong>Error : </strong>
-                <p id="errordesc"</p>
             </div>
         </div>
     </div>
@@ -135,33 +139,51 @@
     var fname = document.getElementById('fname');
     var lname = document.getElementById('lname');
     var email = document.getElementById('email');
+    var uname = document.getElementById('username');
     var password = document.getElementById('password');
     var cpassword = document.getElementById('cpassword');
     var regBtn = document.getElementById('register-btn');
     var loginBtn = document.getElementById('login-btn');
     var passwordError = document.getElementById('passworderror');
+    var usernameError = document.getElementById('usernameerror');
     var passwordMatchError = document.getElementById('passwordmatcherror');
+    var duplicateUsernameError = document.getElementById('duplicateusernameerror');
     var emailError = document.getElementById('emailerror');
     var successInfo = document.getElementById('infodiv')
-    
+
     regBtn.onclick = function() {
         passwordError.style.display = 'none'
+        usernameError.style.display = 'none'
         passwordMatchError.style.display = 'none'
+        duplicateUsernameError.style.display = 'none'
         emailError.style.display = 'none'
         successInfo.style.display = 'none'
-        document.getElementById('error').style.display = 'none';
 
+        var username = uname.value;
         var mailFormat = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         
-        if (fname.value == '' || lname.value == '') {
-            document.getElementById('errordesc').textContent = 'First name and Last name cannot be empty!';
-            document.getElementById('error').style.display = 'block';
-        }
-        if (!email.value.match(mailFormat)){
+        if(!email.value.match(mailFormat)){
             //invalid email id
             emailError.style.display = 'block';
             return;
         } 
+        if (username.substr(0, 1) === "_" ||
+            username.substr(0, 1) === "@" ||
+            username.substr(0, 1) === "1" ||
+            username.substr(0, 1) === "2" ||
+            username.substr(0, 1) === "3" ||
+            username.substr(0, 1) === "4" ||
+            username.substr(0, 1) === "5" ||
+            username.substr(0, 1) === "6" ||
+            username.substr(0, 1) === "7" ||
+            username.substr(0, 1) === "8" ||
+            username.substr(0, 1) === "9" ||
+            username.substr(0, 1) === "0" ||
+            username === "") {
+                //invalid username
+                usernameError.style.display = 'block';
+                return;
+        }
         if (password.value.length < 6 ||
             password.value.length >= 12) {
                 //invalid password
@@ -174,26 +196,52 @@
             return;
         }
 
+        // onAuthStateChanged(auth, (user) => {
+        //     if (user) {
+        //         const uid = user.uid;
+        //         const isMailVerified = user.emailVerified;
+        //         if(isMailVerified) {
+        //             alert('Login Successful');
+        //         }    
+        //      } else {
+        //         alert('Logout Successful');
+        //      }
+        // });
+
         const dbRef = ref(getDatabase());
 
+        //Creating User
         createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then((userCredential) => {
+            .then((userCredential) => {
+
+            //Sent Email Verification Link
             sentVerificationLink();
+
             const user = userCredential.user;
             const uid = user.uid;
             set(ref(db, 'Users/' + uid), {
+                    username: username,
                     password: password.value,
                     first_name: fname.value,
                     last_name: lname.value,
                     email: email.value,
                 })
                 .then(() => {
+                    // successInfo.style.display = 'block';
+                    uname.value = '';
+                    password.value = '';
+                    fname.value = '';
+                    lname.value = '';
+                    email.value = '';
+                    cpassword.value = '';
                     auth.signOut();
+                    alert('Registration Successful. Please Verify your Email.');
+                    window.location.href="login.html"
                 });
         })
         .catch((error) => {
-            document.getElementById('errordesc').textContent = error;
-            document.getElementById('error').style.display = 'block';
+            alert(error.message);
+            console.log(error.message);
         });
     }
 
@@ -204,16 +252,11 @@
     function sentVerificationLink() {
         sendEmailVerification(auth.currentUser)
             .then(() => {
-                password.value = '';
-                fname.value = '';
-                lname.value = '';
-                email.value = '';
-                cpassword.value = '';
-                successInfo.style.display = 'block';
+                // Email verification Link sent!
             }).catch((error) => {
-                document.getElementById('errordesc').textContent = error;
-                document.getElementById('error').style.display = 'block';
+                alert(error.message);
             });
     }
+
 </script>
 </html>
