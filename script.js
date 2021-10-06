@@ -1,15 +1,15 @@
 function switchPreview() {
 	if (document.getElementById('preview-switch').checked) {
-		document.getElementById("code").style.display = 'block';
+		document.getElementById("output-container").style.display = 'block';
 		html.style.height = '250px';
 		css.style.height = '250px';
 		js.style.height = '250px';
-        document.body.style.overflow = '';
+        document.body.style.overflow = 'auto';
 	} else {
-		document.getElementById("code").style.display = 'none';
-		html.style.height = '28.5rem';
-		css.style.height = '28.5rem';
-		js.style.height = '28.5rem';
+		document.getElementById("output-container").style.display = 'none';
+		html.style.height = '25.5rem';
+		css.style.height = '25.5rem';
+		js.style.height = '25.5rem';
         document.body.style.overflow = 'hidden';
 	}
 }

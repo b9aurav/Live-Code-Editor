@@ -26,18 +26,20 @@
       </div>
     </nav>
 
-    <div class="container-fluid" style="background-color: rgb(50,50,50);">
+    <div class="container-fluid" style="background-color: rgb(50,50,50);" id="option-container">
       <div class="card">
         <div class="card-body navbar">
+          <h3 style="width: 100%; text-align: left;" id="project-title"></h3>
           <div class="form-check form-switch live-preview-input">
-            <input class="form-check-input" type="checkbox" id="preview-switch" checked onchange="switchPreview()">
+            <input class="form-check-input" type="checkbox" id="preview-switch" onchange="switchPreview()">
             <label class="form-check-label" for="preview-switch">Live preview</label>
           </div>
           <div>
             <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/add.svg" alt="" srcset=""> New Project</button>
-            <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/save.svg" alt="" srcset=""> Save Project</button>
-            <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/download.svg" alt="" srcset=""> Download Project</button>
-            <button type="button" class="btn btn-success" id="new-tab-btn"><img src="img/run.svg" alt="" srcset=""> Run in new tab</button>
+            <button type="button" class="btn btn-primary" id="save-project-btn"><img src="img/save.svg" alt="" srcset=""></button>
+            <button type="button" class="btn btn-primary" id="download-project-btn"><img src="img/download.svg" alt="" srcset=""></button>
+            <button type="button" class="btn btn-danger" id="delete-project-btn"><img src="img/delete.svg" alt="" srcset=""></button>
+            <button type="button" class="btn btn-success" id="new-tab-btn"><img src="img/run.svg" alt="" srcset=""></button>
           </div>
         </div>
       </div>
@@ -55,6 +57,13 @@
 
     <div class="container-fluid" id="output-container">
       <iframe id="code"></iframe>
+    </div>
+
+    <div id="initial-div">
+      <div id="initial-inner-div">
+      <h4 style="margin-top: 4px;">Open project from sidebar or create </h4> 
+      <button type="button" class="btn btn-primary" id="new-project" style="margin-left: 5px;"><img src="img/add.svg" alt="" srcset=""> New Project</button>
+      </div>
     </div>
 
     <div id="myModal" class="modal">

@@ -17,6 +17,7 @@
             align-items: center;
             justify-content: center;
             display: flex;
+            flex-direction: column;
         }
         #main-container {
             width: 30rem;
@@ -51,6 +52,27 @@
             float: left;
             flex-direction: row;
         }
+        #members-div {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        .member-details {
+            color: whitesmoke;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 1rem;
+            border: 1px solid grey;
+            border-radius: 15px;
+            padding: 1rem;
+            width: 22rem;
+            background-color: rgba(40, 40, 40, 0.5);
+        }
+        .member-details-val {
+            color: silver;
+        }
     </style>
 </head>
 <body>
@@ -75,6 +97,29 @@
                 <strong>Error : </strong>
                 <p id="errordesc"></p>
             </div>
+        </div>
+    </div>
+    <div id="members-div">
+        <div class="member-details">
+            <h3>BAMBHANIYA GAURAV</h4>
+            <h5 class="member-details-val">PRN : 2020033800113401</h5>
+            <h5 class="member-details-val">Roll No.: 412004</h5>
+            <h5 class="member-details-val">Batch : Z</h5>
+            <h5 class="member-details-val">Class : BE - III CSE</h5>
+        </div>
+        <div class="member-details">
+            <h3>GANGANI TUSHAR</h3>
+            <h5 class="member-details-val">PRN : 2020033800113045</h5>
+            <h5 class="member-details-val">Roll No.: 412019</h5>
+            <h5 class="member-details-val">Batch : Z</h5>
+            <h5 class="member-details-val">Class : BE - III CSE</h5>
+        </div>
+        <div class="member-details">
+            <h4>KANANI HARSH</h4>
+            <h5 class="member-details-val">PRN : 2020033800113076</h5>
+            <h5 class="member-details-val">Roll No.: 412029</h5>
+            <h5 class="member-details-val">Batch : Z</h5>
+            <h5 class="member-details-val">Class : BE - III CSE</h5>
         </div>
     </div>
 </body>

@@ -11,6 +11,7 @@ body {
 textarea {
   width: 33%;
   min-height: 250px;
+  height: 25.5rem;
   overflow: scroll;
   margin: auto;
   display: inline-block;
@@ -41,6 +42,7 @@ iframe {
 
 #output-container {
   border: 1px solid black;
+  display: none;
 }
 
 #html {
@@ -211,4 +213,32 @@ iframe {
   display: none;
   float: left;
   flex-direction: row;
+}
+
+#initial-div {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-image: url(img/bg.jpg);
+  background-size: cover;
+  width: 100%;
+  position: absolute;
+}
+
+#initial-inner-div {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 2rem;
+  border: 1px solid grey;
+  border-radius: 15px;
+  color: white;
+  background-color: rgba(15, 15, 15, 0.7);
+}
+
+#option-container,
+#code-container,
+#output-container {
+  display: none;
 }
