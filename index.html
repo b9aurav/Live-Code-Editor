@@ -1,87 +1,143 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  	<title>Live Code Editor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  </head>
-  <body>
 
-    <div id="mySidebar" class="sidebar">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-      <div id="project-list"></div>
-    </div>
+<head>
+  <title>Live Code Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
 
-    <nav class="navbar navbar-dark bg-dark">
-      <div class="container-fluid">
-        <div id="menu-head-div">
-          <img width="24px" src="https://img.icons8.com/material-outlined/24/ffffff/menu--v1.png" style="margin-right: 8px;" onclick="openSidebar()"/>
-          <div class="heading"><h4 class="heading">Live Code Editor</h4></div>
-        </div>
-        <div id="navbar-sidediv">
-          <a id="user-name">Howdy, User</a>
-          <button type="button" class="btn btn-outline-secondary" style="margin-left: 8px;" onclick="logoutUser()"><img src="img/logout.svg" alt="" srcset=""> Logout!</button>
-        </div>
-      </div>
-    </nav>
+<body>
 
-    <div class="container-fluid" style="background-color: rgb(50,50,50);" id="option-container">
-      <div class="card">
-        <div class="card-body navbar">
-          <h3 style="width: 100%; text-align: left;" id="project-title"></h3>
-          <div class="form-check form-switch live-preview-input">
-            <input class="form-check-input" type="checkbox" id="preview-switch" onchange="switchPreview()">
-            <label class="form-check-label" for="preview-switch">Live preview</label>
-          </div>
-          <div>
-            <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/add.svg" alt="" srcset=""> New Project</button>
-            <button type="button" class="btn btn-primary" id="save-project-btn"><img src="img/save.svg" alt="" srcset=""></button>
-            <button type="button" class="btn btn-primary" id="download-project-btn"><img src="img/download.svg" alt="" srcset=""></button>
-            <button type="button" class="btn btn-danger" id="delete-project-btn"><img src="img/delete.svg" alt="" srcset=""></button>
-            <button type="button" class="btn btn-success" id="new-tab-btn"><img src="img/run.svg" alt="" srcset=""></button>
-          </div>
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
+    <div id="project-list"></div>
+  </div>
+
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div id="menu-head-div">
+        <img width="24px" src="https://img.icons8.com/material-outlined/24/ffffff/menu--v1.png"
+          style="margin-right: 8px;" onclick="openSidebar()" />
+        <div class="heading">
+          <h4 class="heading">Live Code Editor</h4>
         </div>
       </div>
+      <div id="navbar-sidediv">
+        <a id="user-name">Howdy, User</a>
+        <button type="button" class="btn btn-outline-secondary" style="margin-left: 8px;" onclick="logoutUser()"><img
+            src="img/logout.svg" alt="" srcset=""> Logout!</button>
+      </div>
     </div>
+  </nav>
 
-    <div class="container-fluid" id="code-container">
-      <div class="card">
-        <div class="card-body">
-          <textarea id="html"></textarea>
-          <textarea id="css">/* Start CSS from here. */</textarea>
-          <textarea id="js">//Start JavaScript from here.</textarea>
+  <div class="container-fluid" style="background-color: rgb(50,50,50);" id="option-container">
+    <div class="card">
+      <div class="card-body navbar">
+        <h3 style="width: 100%; text-align: left;" id="project-title"></h3>
+        <div class="form-check form-switch live-preview-input">
+          <input class="form-check-input" type="checkbox" id="preview-switch" onchange="switchPreview()">
+          <label class="form-check-label" for="preview-switch">Live preview</label>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/add.svg" alt="" srcset="">
+            New Project</button>
+          <button type="button" class="btn btn-primary" onClick="formatCode()"><img src="img/add.svg" alt="" srcset="">
+            Format Code</button>
+          <button type="button" class="btn btn-primary" id="save-project-btn"><img src="img/save.svg" alt=""
+              srcset=""></button>
+          <button type="button" class="btn btn-primary" id="download-project-btn"><img src="img/download.svg" alt=""
+              srcset=""></button>
+          <button type="button" class="btn btn-danger" id="delete-project-btn"><img src="img/delete.svg" alt=""
+              srcset=""></button>
+          <button type="button" class="btn btn-success" id="new-tab-btn"><img src="img/run.svg" alt=""
+              srcset=""></button>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container-fluid" id="output-container">
-      <iframe id="code"></iframe>
-    </div>
-
-    <div id="initial-div">
-      <div id="initial-inner-div">
-      <h4 style="margin-top: 4px;">Open project from sidebar or create </h4> 
-      <button type="button" class="btn btn-primary" id="new-project" style="margin-left: 5px;"><img src="img/add.svg" alt="" srcset=""> New Project</button>
+  <div class="container-fluid" id="code-container">
+    <div class="card">
+      <div class="card-body">
+        <textarea id="html"></textarea>
+        <textarea id="css">/* Start CSS from here. */</textarea>
+        <textarea id="js">//Start JavaScript from here.</textarea>
       </div>
     </div>
+  </div>
 
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="close-modal-btn">&times;</span>
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/details.svg" alt="" srcset=""></span>
-          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="project-name" placeholder="Project Name">
-        </div>
-        <div class="alert alert-danger" id="error-div" role="alert">
-          <strong>Error : </strong>
-          <p id="errordesc"></p>
-        </div>
-        <button type="button" class="btn btn-success" style="float: right;" id="create-project-btn"><img src="img/add.svg" alt="" srcset=""> Create</button>
-      </div>
+  <div class="container-fluid" id="output-container">
+    <iframe id="code"></iframe>
+  </div>
+
+  <div id="initial-div">
+    <div id="initial-inner-div">
+      <h4 style="margin-top: 4px;">Open project from sidebar or create </h4>
+      <button type="button" class="btn btn-primary" id="new-project" style="margin-left: 5px;"><img src="img/add.svg"
+          alt="" srcset=""> New Project</button>
     </div>
+  </div>
 
-    <script type="module" src="app.js"></script>
-    <script src="script.js"></script>
-  </body>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-modal-btn">&times;</span>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"><img src="img/details.svg" alt=""
+            srcset=""></span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default" id="project-name" placeholder="Project Name">
+      </div>
+      <div class="alert alert-danger" id="error-div" role="alert">
+        <strong>Error : </strong>
+        <p id="errordesc"></p>
+      </div>
+      <button type="button" class="btn btn-success" style="float: right;" id="create-project-btn"><img src="img/add.svg"
+          alt="" srcset=""> Create</button>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+  <script src="script.js"></script>
+  <!-- <script src='http://lovasoa.github.io/tidy-html5/tidy.js'></script> -->
+  <script>
+    // options = {
+    //   "indent": "auto",
+    //   "indent-spaces": 2,
+    //   "wrap": 80,
+    //   "markup": true,
+    //   "output-xml": false,
+    //   "numeric-entities": true,
+    //   "quote-marks": true,
+    //   "quote-nbsp": false,
+    //   "show-body-only": true,
+    //   "quote-ampersand": false,
+    //   "break-before-br": true,
+    //   "uppercase-tags": false,
+    //   "uppercase-attributes": false,
+    //   "drop-font-tags": true,
+    //   "tidy-mark": false
+    // }
+
+    function formatCode() {
+      const url = 'https://api.dotmaui.com/client/1.0/htmlbeautify/';
+
+      console.log(html.value);
+      var data = {
+        apikey: "CadydUGl2YvpG71vV8e1tG4NB7Xq2Zdo63QBbMO84uS7w",
+        html: html.value
+      }
+      $.post(url, data, function (data, status) {
+        html.value = data;
+      });
+      // var result = tidy_html5(html, options);
+      // html.value =  result;
+      // console.log(result);
+    }
+  </script>
+</body>
+
 </html>

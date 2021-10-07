@@ -1,3 +1,4 @@
+// https://api.dotmaui.com/client/1.0/htmlbeautify/CadydUGl2YvpG71vV8e1tG4NB7Xq2Zdo63QBbMO84uS7w
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
 import { getDatabase, ref, get, child, onValue, set, push } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
