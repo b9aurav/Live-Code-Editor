@@ -1,4 +1,3 @@
-// https://api.dotmaui.com/client/1.0/htmlbeautify/CadydUGl2YvpG71vV8e1tG4NB7Xq2Zdo63QBbMO84uS7w
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
 import { getDatabase, ref, get, child, onValue, set, push } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
@@ -79,26 +78,41 @@ closeModalBtn.onclick = function() {
 }
 
 function loadData() {
-	while(document.getElementById('project-list').hasChildNodes()) {
-		document.getElementById('project-list').removeChild(document.getElementById('project-list').firstChild)
-	}
 	const projectPath = ref(db, 'Users/' + userKey + "/Projects");
 	onValue(projectPath, (snapshot) => {
-		snapshot.forEach(function(childSnapshot) {
+		while(document.getElementById('project-list').hasChildNodes()) {
+			document.getElementById('project-list').removeChild(document.getElementById('project-list').firstChild)
+		}
+		for(let i = 0; i < Object.keys(snapshot.val()).length; i++) {
 			projectElement = document.createElement('a');
-			projectElement.textContent = childSnapshot.val().project_name;
+			projectElement.textContent = snapshot.child(Object.keys(snapshot.val())[i]).val().project_name;
 			projectElement.href = "#";
 			projectElement.onclick = function() {
-				project = projectElement.textContent;
-				projectKey = Object.keys(snapshot.val())[0];
+				project = snapshot.child(Object.keys(snapshot.val())[i]).val().project_name;
+				projectKey = Object.keys(snapshot.val())[i];
 				document.getElementById('project-title').textContent = project;
 				const dbProjectPath = ref(db, 'Users/' + userKey + "/Projects/" + projectKey);
+				console.log(projectKey);
 				onValue(dbProjectPath, (snapshot) => {
 					const data = snapshot.val();
-					html.value = data.html;
-					css.value = data.css;
-					js.value = data.js;
-					compile();
+					if (data.html != null) {
+						html.value = data.html;
+						css.value = data.css;
+						js.value = data.js;
+						compile();
+					} else {
+						html.value = '';
+						html.value = html.value + "<!DOCTYPE html>\n";
+						html.value = html.value + "<html>\n";
+						html.value = html.value + "<head>\n";
+						html.value = html.value + "<title>Document</title>\n";
+						html.value = html.value + "</head>\n";
+						html.value = html.value + "<body>\n";
+						html.value = html.value + "</body>\n";
+						html.value = html.value + "</html>";
+						css.value = '/* Start CSS from here. */'
+						js.value = '// Start JS from here.'
+					}
 				});					
 				optionContainer.style.display = 'block';
 				codeContainer.style.display = 'block';
@@ -106,7 +120,7 @@ function loadData() {
 				document.body.style.overflow = 'auto';
 			};
 			document.getElementById("project-list").appendChild(projectElement);
-		});
+		}
 	});
 }
 
@@ -150,7 +164,12 @@ document.getElementById('save-project-btn').onclick = function() {
 }
 
 document.getElementById('download-project-btn').onclick = function() {
-	var file = new Blob([html.value+"<style>"+css.value+"</style>"+"<script>" + js.value + "</script>"], { type: "html/plain;charset=utf-8" });
+	var htmlCode = html.value;
+	var cssCode = '\n<style>\n' + css.value + '\n</style>\n';
+	var jsCode = '\n<script>\n' + js.value + '\n</script>\n';
+	var cssIncluded = concateFileCodes(htmlCode, htmlCode.match('<head>').index + 6, cssCode);
+	var finalFileCode = concateFileCodes(cssIncluded, cssIncluded.match('</body>').index + 7, jsCode);
+	var file = new Blob([finalFileCode], { type: "html/plain;charset=utf-8" });
     var a = document.createElement("a");
     a.download = project + ".html";
     a.href = window.URL.createObjectURL(file);
@@ -174,6 +193,10 @@ document.getElementById('delete-project-btn').onclick = function() {
 	.catch((error) => {
 		alert(error);
 	});
+}
+
+function concateFileCodes(str, index, stringToAdd){
+	return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
 }
 
 compile();

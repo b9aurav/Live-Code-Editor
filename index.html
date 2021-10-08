@@ -45,8 +45,8 @@
         <div>
           <button type="button" class="btn btn-primary" id="new-project-btn"><img src="img/add.svg" alt="" srcset="">
             New Project</button>
-          <button type="button" class="btn btn-primary" onClick="formatCode()"><img src="img/add.svg" alt="" srcset="">
-            Format Code</button>
+          <button type="button" class="btn btn-primary" onClick="formatCode()"><img src="img/reformat.svg" alt="" srcset="">
+            Re-format Code</button>
           <button type="button" class="btn btn-primary" id="save-project-btn"><img src="img/save.svg" alt=""
               srcset=""></button>
           <button type="button" class="btn btn-primary" id="download-project-btn"><img src="img/download.svg" alt=""
@@ -63,9 +63,9 @@
   <div class="container-fluid" id="code-container">
     <div class="card">
       <div class="card-body">
-        <textarea id="html"></textarea>
-        <textarea id="css">/* Start CSS from here. */</textarea>
-        <textarea id="js">//Start JavaScript from here.</textarea>
+        <textarea id="html" wrap="off"></textarea>
+        <textarea id="css" wrap="off">/* Start CSS from here. */</textarea>
+        <textarea id="js" wrap="off">//Start JavaScript from here.</textarea>
       </div>
     </div>
   </div>
@@ -102,40 +102,42 @@
 
   <script type="module" src="app.js"></script>
   <script src="script.js"></script>
-  <!-- <script src='http://lovasoa.github.io/tidy-html5/tidy.js'></script> -->
   <script>
-    // options = {
-    //   "indent": "auto",
-    //   "indent-spaces": 2,
-    //   "wrap": 80,
-    //   "markup": true,
-    //   "output-xml": false,
-    //   "numeric-entities": true,
-    //   "quote-marks": true,
-    //   "quote-nbsp": false,
-    //   "show-body-only": true,
-    //   "quote-ampersand": false,
-    //   "break-before-br": true,
-    //   "uppercase-tags": false,
-    //   "uppercase-attributes": false,
-    //   "drop-font-tags": true,
-    //   "tidy-mark": false
-    // }
-
     function formatCode() {
-      const url = 'https://api.dotmaui.com/client/1.0/htmlbeautify/';
-
-      console.log(html.value);
-      var data = {
-        apikey: "CadydUGl2YvpG71vV8e1tG4NB7Xq2Zdo63QBbMO84uS7w",
-        html: html.value
+      const htmlUrl = 'https://www.10bestdesign.com/dirtymarkup/api/html'
+      var htmlData = {
+        indent: "tabs",
+        code: html.value,
+        'add-empty-lines': true,
+        'allow-proprietary-attribs': true,
+        'Access-Control-Allow-Origin': true
       }
-      $.post(url, data, function (data, status) {
-        html.value = data;
+      $.post(htmlUrl, htmlData, function (data, status) {
+        html.value = data.clean;
       });
-      // var result = tidy_html5(html, options);
-      // html.value =  result;
-      // console.log(result);
+
+      const cssUrl = 'https://www.10bestdesign.com/dirtymarkup/api/css'
+      var cssData = {
+        indent: "tabs",
+        code: css.value,
+        'newline-between-rules': true,
+        'newline-between-selectors': true,
+        'Access-Control-Allow-Origin': true
+      }
+      $.post(cssUrl, cssData, function (data, status) {
+        css.value = data.clean;
+      });
+
+      const jsUrl = 'https://www.10bestdesign.com/dirtymarkup/api/js'
+      var jsData = {
+        indent: "tabs",
+        code: js.value,
+        'preserve-empty-lines': true,
+        'Access-Control-Allow-Origin': true
+      }
+      $.post(jsUrl, jsData, function (data, status) {
+        js.value = data.clean;
+      });
     }
   </script>
 </body>
