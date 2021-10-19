@@ -126,8 +126,37 @@ function loadData() {
 	});
 }
 
-function loadSpecificProject(key) {
+function loadSpecificProject(key, name) {
 	console.log(key);
+	document.getElementById('project-title').textContent = name;
+	const dbProjectPath = ref(db, 'Users/' + userKey + "/Projects/" + key);
+	onValue(dbProjectPath, (snapshot) => {
+		const data = snapshot.val();
+		if (data.html != null) {
+			html.value = data.html;
+			css.value = data.css;
+			js.value = data.js;
+		} else {
+			html.value = '';
+			html.value = html.value + "<!DOCTYPE html>\n";
+			html.value = html.value + "<html>\n";
+			html.value = html.value + "<head>\n";
+			html.value = html.value + "<title>Document</title>\n";
+			html.value = html.value + "</head>\n";
+			html.value = html.value + "<body>\n";
+			html.value = html.value + "</body>\n";
+			html.value = html.value + "</html>";
+			css.value = '/* Start CSS from here. */'
+			js.value = '// Start JS from here.'
+		}
+	});					
+	code.open();
+	code.writeln(html.value+"<style>"+css.value+"</style>"+"<script>" + js.value + "</script>");
+	code.close();
+	optionContainer.style.display = 'block';
+	codeContainer.style.display = 'block';
+	document.getElementById('initial-div').style.display = 'none';
+	document.body.style.overflow = 'auto';
 }
 
 document.getElementById('create-project-btn').onclick = function() {
@@ -146,7 +175,7 @@ document.getElementById('create-project-btn').onclick = function() {
 			document.getElementById('error-div').style.display = 'none';
 			modal.style.display = "none";
 			loadData();
-			loadSpecificProject(key);
+			loadSpecificProject(key, projectName.value);
 		})
 		.catch((error) => {
 			errorDesc.textContent = ' Invalid project name, project name should contain alphabates and numbers only.'

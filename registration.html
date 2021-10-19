@@ -209,7 +209,9 @@
                 lname.value = '';
                 email.value = '';
                 cpassword.value = '';
-                successInfo.style.display = 'block';
+                // successInfo.style.display = 'block';
+                alert('Validation mail successfully sent to your E-mail id.');
+                window.location.href = 'login.html';
             }).catch((error) => {
                 document.getElementById('errordesc').textContent = error;
                 document.getElementById('error').style.display = 'block';
