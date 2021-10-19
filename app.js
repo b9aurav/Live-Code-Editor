@@ -126,6 +126,10 @@ function loadData() {
 	});
 }
 
+function loadSpecificProject(key) {
+	console.log(key);
+}
+
 document.getElementById('create-project-btn').onclick = function() {
 	const projectName = document.getElementById('project-name');
 	var projectRegex = /^[a-zA-Z0-9]+$/;
@@ -133,7 +137,8 @@ document.getElementById('create-project-btn').onclick = function() {
 		document.getElementById('errordesc').textContent = ' Invalid project name, project name should contain alphabates and numbers only.'
         document.getElementById('error-div').style.display = 'flex';
 	} else {
-		set(ref(db, 'Users/' + userKey + "/Projects/" + push(child(ref(db), 'Users/' + userKey + '/Projects')).key), {
+		var key = push(child(ref(db), 'Users/' + userKey + '/Projects')).key;
+		set(ref(db, 'Users/' + userKey + "/Projects/" + key), {
 			project_name: projectName.value
 		})
 		.then(() => {
@@ -141,6 +146,7 @@ document.getElementById('create-project-btn').onclick = function() {
 			document.getElementById('error-div').style.display = 'none';
 			modal.style.display = "none";
 			loadData();
+			loadSpecificProject(key);
 		})
 		.catch((error) => {
 			errorDesc.textContent = ' Invalid project name, project name should contain alphabates and numbers only.'
